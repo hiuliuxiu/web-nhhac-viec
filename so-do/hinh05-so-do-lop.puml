@@ -1,0 +1,163 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam groupInheritance 2
+skinparam nodesep 25
+skinparam ranksep 50
+hide empty members
+
+package "core" as core1 {
+  class Router {
+    +run()
+    -dispatch()
+  }
+
+  class Controller {
+    #requireLogin()
+    #requireProjectAccess(projectId, user)
+    #fail(message)
+    #json(data)
+    #view(page, data)
+  }
+
+  class Exception
+  class AppException
+}
+
+package "controllers" {
+  class AuthController {
+    +login()
+    +register()
+    +logout()
+  }
+  class TaskController {
+    +list()
+    +create()
+    +update()
+    +move()
+    +delete()
+  }
+  class ProjectController {
+    +list()
+    +create()
+    +update()
+    +delete()
+    +settings()
+    +testWebhook()
+  }
+  class MemberController {
+    +list()
+    +search()
+    +invite()
+    +remove()
+  }
+  class ReminderController {
+    +list()
+    +scan()
+  }
+  class DashboardController {
+    +index()
+  }
+}
+
+package "services" {
+  class ReminderService {
+    -budget : int
+    +tryBeginScan(force)
+    +scan()
+    +notifyCompleted(taskId)
+    -dispatch(task, type)
+  }
+  class DiscordService {
+    +isValidWebhook(url)
+    +buildTaskMessage(task, type)
+    +send(url, payload)
+  }
+}
+
+package "core " as core2 {
+  class Model {
+    #db : PDO
+    +beginTransaction()
+    +commit()
+    +rollBack()
+  }
+
+  class Database <<Singleton>> {
+    -{static} connection : PDO
+    +{static} getConnection() : PDO
+  }
+
+  class Helper {
+    +{static} dueState(dueAt, status, minutes)
+    +{static} formatTask(row)
+    +{static} formatProject(row)
+  }
+}
+
+package "models" {
+  class UserModel {
+    +findById(id)
+    +findByLogin(identifier)
+    +create(...)
+  }
+  class ProjectModel {
+    +getRole(projectId, userId)
+    +listWithStats(userId)
+    +create(...)
+    +updateSettings(projectId, settings)
+  }
+  class MemberModel {
+    +listByProject(projectId)
+    +searchUsersNotInProject(projectId, q)
+    +add(projectId, userId, role)
+    +remove(projectId, userId)
+  }
+  class TaskModel {
+    +find(id)
+    +listByProjects(projectIds)
+    +insert(task)
+    +update(id, task)
+    +delete(id)
+  }
+  class ReminderModel {
+    +exists(taskId, type, channel)
+    +add(...)
+    +claimScan(now, threshold)
+  }
+  class DashboardModel {
+    +urgentTasks(projectIds)
+    +workload(projectIds)
+  }
+}
+
+Router .right.> Controller : tạo và gọi action
+Controller .right.> AppException : fail()
+Exception <|-- AppException
+
+Controller <|-- AuthController
+Controller <|-- TaskController
+Controller <|-- ProjectController
+Controller <|-- MemberController
+Controller <|-- ReminderController
+Controller <|-- DashboardController
+
+TaskController ..> ReminderService
+ReminderController ..> ReminderService
+ProjectController ..> DiscordService
+ReminderService *-right- DiscordService
+
+services -[hidden]down- core2
+Model .right.> Database : getConnection()
+Database -[hidden]right- Helper
+
+Model <|-- UserModel
+Model <|-- ProjectModel
+Model <|-- MemberModel
+Model <|-- TaskModel
+Model <|-- ReminderModel
+Model <|-- DashboardModel
+
+ReminderService *-- TaskModel
+ReminderService *-- ReminderModel
+@enduml

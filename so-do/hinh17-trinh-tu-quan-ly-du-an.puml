@@ -1,0 +1,19 @@
+@startuml
+actor "Chủ dự án" as U
+participant "Giao diện" as A
+participant "ProjectController" as C
+participant "ProjectModel" as PM
+participant "MemberModel" as MM
+database "CSDL" as DB
+
+U -> A : Nhập tên, mô tả, màu; nhấn "Tạo dự án"
+A -> C : create(thông tin dự án)
+C -> PM : create(tên, mô tả, màu, người tạo)
+PM -> DB : Thêm dự án
+DB --> PM : Mã dự án
+PM --> C : Mã dự án
+C -> MM : add(mã dự án, người tạo, 'owner')
+MM -> DB : Thêm người tạo làm chủ dự án
+C --> A : Dự án mới
+A --> U : Hiển thị dự án mới
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+actor "Người dùng" as U
+participant "Giao diện\nđăng nhập" as F
+participant "AuthController" as C
+participant "UserModel" as M
+database "CSDL" as DB
+
+U -> F : Nhập tên đăng nhập, mật khẩu
+F -> C : login(username, password)
+C -> M : findByLogin(username)
+M -> DB : Tìm tài khoản
+DB --> M : Tài khoản
+M --> C : Tài khoản
+C -> C : Kiểm tra mật khẩu
+alt Sai thông tin
+  C --> F : Báo lỗi
+  F --> U : "Tên đăng nhập hoặc mật khẩu không đúng"
+else Đúng thông tin
+  C -> C : Ghi nhận đăng nhập
+  C --> F : Đăng nhập thành công
+  F --> U : Chuyển vào màn hình chính
+end
+@enduml

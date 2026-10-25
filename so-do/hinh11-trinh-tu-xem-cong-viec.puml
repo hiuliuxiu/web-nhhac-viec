@@ -1,0 +1,19 @@
+@startuml
+actor "Người dùng" as U
+participant "Giao diện" as A
+participant "TaskController" as C
+participant "TaskModel" as M
+database "CSDL" as DB
+
+U -> A : Mở trang "Công việc"
+A -> C : list(project_id)
+C -> C : Kiểm tra quyền xem dự án
+C -> M : listByProjects(project_id)
+M -> DB : Lấy công việc của dự án
+DB --> M : Danh sách công việc
+M --> C : Danh sách công việc
+C --> A : Danh sách công việc
+A --> U : Hiển thị bảng Kanban
+U -> A : Đổi góc nhìn / tìm kiếm, lọc
+A --> U : Hiển thị lại danh sách
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+actor "Chủ dự án" as U
+participant "Giao diện" as A
+participant "ProjectController" as C
+participant "ProjectModel" as M
+database "CSDL" as DB
+
+U -> A : Chỉnh cấu hình, nhấn "Lưu"
+A -> C : settings(cấu hình)
+C -> C : Kiểm tra quyền chủ dự án\nvà thông tin cấu hình
+C -> M : updateSettings(project_id, cấu hình)
+M -> DB : Lưu cấu hình dự án
+DB --> M : OK
+M --> C : OK
+C --> A : Lưu thành công
+A --> U : "Đã lưu cấu hình nhắc việc"
+@enduml

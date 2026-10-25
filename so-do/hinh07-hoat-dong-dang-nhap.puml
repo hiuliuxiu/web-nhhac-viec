@@ -1,0 +1,18 @@
+@startuml
+|Người dùng|
+start
+:Mở trang Đăng nhập;
+repeat
+  :Nhập tên đăng nhập và mật khẩu;
+  :Nhấn nút "Đăng nhập";
+  |Hệ thống|
+  :Kiểm tra thông tin đăng nhập;
+  backward:Báo lỗi "Tên đăng nhập hoặc
+  mật khẩu không đúng";
+repeat while (Thông tin đúng?) is (Sai) not (Đúng)
+:Ghi nhận đăng nhập;
+:Chuyển vào màn hình chính;
+|Người dùng|
+:Xem màn hình chính;
+stop
+@enduml

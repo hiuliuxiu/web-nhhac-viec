@@ -1,0 +1,76 @@
+@startuml
+left to right direction
+skinparam actorStyle awesome
+
+actor "Thành viên dự án" as TV
+actor "Chủ dự án" as CDA
+TV <|- CDA
+
+rectangle "Hệ thống" {
+  rectangle "Quản lý công việc" {
+    usecase "Xem công việc\n(Kanban / Danh sách / Lịch)" as UC06
+    usecase "Tìm kiếm & lọc" as UC07
+    usecase "Thêm công việc" as UC08
+    usecase "Sửa công việc" as UC09
+    usecase "Xoá công việc" as UC11
+    usecase "Kéo thả đổi trạng thái" as UC10
+    usecase "Phân công cho thành viên" as PC
+  }
+  rectangle "Tổng quan" {
+    usecase "Xem bảng điều khiển\n& thống kê tiến độ" as UC04
+  }
+  rectangle "Xác thực" {
+    usecase "Đăng ký tài khoản" as UC01
+    usecase "Đăng nhập" as UC02
+    usecase "Đăng xuất" as UC03
+  }
+  rectangle "Quản lý dự án" {
+    usecase "Xem / chuyển dự án" as UC05
+    usecase "Tạo dự án" as TaoDA
+    usecase "Sửa dự án" as SuaDA
+    usecase "Xoá dự án" as XoaDA
+  }
+  rectangle "Quản lý thành viên" {
+    usecase "Xem danh sách thành viên" as UC12
+    usecase "Mời thành viên" as MoiTV
+    usecase "Xoá thành viên" as XoaTV
+  }
+  rectangle "Nhắc việc & Thông báo" {
+    usecase "Quét deadline ngay" as UC14
+    usecase "Xem thông báo" as UC13
+    usecase "Cấu hình webhook & nhắc việc" as UC18
+    usecase "Gửi tin nhắn thử" as UC19
+    usecase "Xoá lịch sử thông báo" as UC20
+    usecase "Đẩy thông báo Discord" as Discord
+  }
+}
+
+TV --> UC06
+TV --> UC07
+TV --> UC08
+TV --> UC09
+TV --> UC11
+TV --> UC10
+TV --> UC04
+TV --> UC01
+TV --> UC02
+TV --> UC03
+TV --> UC05
+TV --> TaoDA
+TV --> UC12
+TV --> UC14
+TV --> UC13
+
+CDA --> SuaDA
+CDA --> XoaDA
+CDA --> MoiTV
+CDA --> XoaTV
+CDA --> UC18
+CDA --> UC19
+CDA --> UC20
+
+UC08 ..> PC : <<extend>>
+UC09 ..> PC : <<extend>>
+UC10 ..> Discord : <<extend>>
+UC19 ..> Discord : <<include>>
+@enduml

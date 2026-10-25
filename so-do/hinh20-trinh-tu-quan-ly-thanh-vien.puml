@@ -1,0 +1,28 @@
+@startuml
+actor "Chủ dự án" as U
+participant "Giao diện" as A
+participant "MemberController" as C
+participant "UserModel" as UM
+participant "MemberModel" as MM
+database "CSDL" as DB
+
+U -> A : Gõ tên hoặc email người cần mời
+A -> C : search(từ khoá)
+C -> MM : searchUsersNotInProject(dự án, từ khoá)
+MM -> DB : Tìm người chưa ở trong dự án
+DB --> MM : Danh sách gợi ý
+MM --> C : Danh sách gợi ý
+C --> A : Danh sách gợi ý
+A --> U : Hiển thị gợi ý
+
+U -> A : Chọn người, nhấn "Mời"
+A -> C : invite(người được mời)
+C -> UM : findByLogin(tên hoặc email)
+UM -> DB : Tìm tài khoản
+DB --> UM : Tài khoản
+UM --> C : Người được mời
+C -> MM : add(dự án, người được mời, 'member')
+MM -> DB : Thêm thành viên
+C --> A : Thêm thành công
+A --> U : Cập nhật danh sách thành viên
+@enduml

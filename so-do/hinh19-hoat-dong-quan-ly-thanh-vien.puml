@@ -1,0 +1,25 @@
+@startuml
+|Chủ dự án|
+start
+:Mở trang "Thành viên";
+|Hệ thống|
+:Hiển thị danh sách thành viên;
+|Chủ dự án|
+:Chọn thao tác (Mời / Xoá);
+:Mời: nhập tên đăng nhập hoặc email,
+chọn người trong danh sách gợi ý
+Xoá: chọn thành viên, xác nhận xoá;
+|Hệ thống|
+switch (Thao tác?)
+case (Mời)
+  :Thêm người đó vào dự án
+  với vai trò Thành viên;
+case (Xoá)
+  :Chuyển việc của người đó về
+  "chưa phân công" rồi xoá khỏi dự án;
+endswitch
+:Cập nhật danh sách thành viên;
+|Chủ dự án|
+:Xem danh sách thành viên;
+stop
+@enduml

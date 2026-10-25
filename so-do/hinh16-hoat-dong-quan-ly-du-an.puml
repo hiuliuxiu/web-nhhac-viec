@@ -1,0 +1,23 @@
+@startuml
+|Chủ dự án|
+start
+:Chọn thao tác với dự án
+(Tạo / Sửa / Xoá);
+:Nhập tên, mô tả, màu
+hoặc xác nhận xoá;
+|Hệ thống|
+switch (Thao tác?)
+case (Tạo)
+  :Tạo dự án mới,
+  người tạo là chủ dự án;
+case (Sửa)
+  :Cập nhật thông tin dự án;
+case (Xoá)
+  :Xoá dự án cùng
+  công việc bên trong;
+endswitch
+:Cập nhật danh sách dự án;
+|Chủ dự án|
+:Xem danh sách dự án;
+stop
+@enduml

@@ -1,0 +1,22 @@
+# Cấu hình chứa mật khẩu CSDL của riêng từng máy
+# (Bỏ dấu # ở dòng dưới nếu bạn tạo bản config riêng và không muốn đẩy lên Git)
+# config/config.php
+
+# ⚠️ QUAN TRỌNG: seed.sql có chứa URL webhook Discord — là thông tin BÍ MẬT.
+# Trước khi đẩy mã nguồn lên GitHub công khai, hãy xoá URL đó đi
+# và tạo lại webhook mới trên Discord.
+
+# Tệp tạm của hệ điều hành và trình soạn thảo
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+*~
+.vscode/
+.idea/
+
+# Nhật ký
+*.log
+
+# Dữ liệu của MySQL thử nghiệm
+tests/.runtime/

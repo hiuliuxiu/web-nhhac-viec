@@ -1,0 +1,16 @@
+Options -Indexes
+
+# Không cho mở trực tiếp các tệp cấu hình và tệp ẩn
+<FilesMatch "^(bootstrap\.php|README\.md|\..*)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Chặn truy cập trực tiếp vào các thư mục mã nguồn
+    RewriteRule ^(core|models|controllers|services|views|config|database)(/|$) - [F,L]
+    # Đường dẫn đẹp: /webnhacviec-v7/task/list => index.php?url=task/list
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+</IfModule>

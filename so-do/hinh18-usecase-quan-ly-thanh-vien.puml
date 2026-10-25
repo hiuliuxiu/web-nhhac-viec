@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+skinparam actorStyle awesome
+
+actor "Chủ dự án" as CDA
+
+rectangle "Hệ thống" {
+  usecase "Quản lý thành viên" as QL
+  usecase "Mời thành viên" as Moi
+  usecase "Xoá thành viên" as Xoa
+  usecase "Tìm kiếm người dùng" as Tim
+}
+
+CDA --> QL
+Moi ..|> QL
+Xoa ..|> QL
+Moi ..> Tim : <<include>>
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+|Chủ dự án|
+start
+:Mở trang "Cài đặt";
+|Hệ thống|
+:Hiển thị cấu hình hiện tại;
+|Chủ dự án|
+repeat
+  :Chọn loại thông báo, ngưỡng nhắc,
+  dán URL webhook Discord;
+  :Nhấn "Lưu";
+  |Hệ thống|
+  :Kiểm tra thông tin cấu hình;
+  backward:Báo lỗi để sửa lại;
+repeat while (Thông tin hợp lệ?) is (Không) not (Có)
+:Lưu cấu hình;
+:Thông báo "Đã lưu cấu hình nhắc việc";
+|Chủ dự án|
+stop
+@enduml

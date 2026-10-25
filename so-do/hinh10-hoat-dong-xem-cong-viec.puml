@@ -1,0 +1,17 @@
+@startuml
+|Người dùng|
+start
+:Mở trang "Công việc";
+|Hệ thống|
+:Tải công việc của dự án đang chọn;
+:Hiển thị bảng Kanban;
+|Người dùng|
+repeat
+  :Chọn góc nhìn (Kanban / Danh sách / Lịch)
+  hoặc nhập tìm kiếm, bộ lọc;
+  |Hệ thống|
+  :Hiển thị lại danh sách công việc;
+  |Người dùng|
+repeat while (Tiếp tục xem?) is (Có) not (Không)
+stop
+@enduml
